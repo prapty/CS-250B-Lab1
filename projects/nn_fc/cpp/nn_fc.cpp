@@ -18,7 +18,7 @@ void nn_fc(float* matrix, float* input, int input_cnt, int input_dim, int output
 	}
 
 	int done_cnt = 0;
-	int parallel_rows=128;
+	int parallel_rows=64;
 	for ( int i = 0; i < input_cnt/parallel_rows; i++ ) {
 		for ( int j = 0; j < output_dim/pe_ways; j++ ) {
 			for ( int k = 0; k < input_dim; k++ ) {
