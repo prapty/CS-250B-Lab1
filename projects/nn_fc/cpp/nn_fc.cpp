@@ -18,10 +18,13 @@ void nn_fc(float* matrix, float* input, int input_cnt, int input_dim, int output
 	}
 
 	int done_cnt = 0;
-	for ( int i = 0; i < input_cnt; i++ ) {
+	int parallel_rows=128;
+	for ( int i = 0; i < input_cnt/parallel_rows; i++ ) {
 		for ( int j = 0; j < output_dim/pe_ways; j++ ) {
 			for ( int k = 0; k < input_dim; k++ ) {
-				send_input(input[i*input_dim + k], i);
+				for(int kk = 0; kk < parallel_rows; kk++) {
+					send_input(input[(i*parallel_rows+kk)*input_dim + k], (i*parallel_rows+kk));
+				}
 			}
 
 			FC_Result res = recv_result();

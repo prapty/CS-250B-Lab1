@@ -49,8 +49,8 @@ module mkMacPe#(Bit#(PeWaysLog) peIdx) (MacPeIfc);
 		weightQ.deq;
 		Float wf = weightQ.first;
 
-		partialSumIdxQ1.enq(tuple3(ini,curOutputIdx,truncate(curMacIdx)));
-		if ( curMacIdx + 1 >= fromInteger(inputDim) ) begin
+		partialSumIdxQ1.enq(tuple3(ini,curOutputIdx,truncate(curMacIdx/127)));
+		if ( (curMacIdx + 1)/127 >= fromInteger(inputDim) ) begin
 			curMacIdx <= 0;
 			let nextOutIdx = curOutputIdx + fromInteger(valueOf(PeWays));
 			if ( nextOutIdx >= fromInteger(outputDim) ) begin
@@ -63,7 +63,7 @@ module mkMacPe#(Bit#(PeWaysLog) peIdx) (MacPeIfc);
 		end
 		fmult.put(inf, wf);
 		
-		if ( curMacIdx == 0 ) begin
+		if ( curMacIdx < 127 ) begin
 			addForwardQ.enq(unpack(0)); // float '0'
 		end else begin
 			partialSumQ2.deq;
@@ -100,12 +100,20 @@ module mkMacPe#(Bit#(PeWaysLog) peIdx) (MacPeIfc);
 		end
 	endrule
 
-
+	Reg#(Float) weightReplicateReg <- mkReg(?);
+	Reg#(Bit#(8)) weightReplicateCnt <- mkReg(0);
 
 	FIFO#(Float) weightInQ <- mkFIFO;
 	rule relayWeightIn;
-		weightInQ.deq;
-		weightQ.enq(weightInQ.first);
+		if (weightReplicateCnt == 0) begin
+			weightInQ.deq;
+			weightQ.enq(weightInQ.first);
+			weightReplicateReg <= weightInQ.first;
+			weightReplicateCnt <= 127;
+		end else begin
+			weightReplicateCnt <= weightReplicateCnt-1;
+			weightQ.enq(weightReplicateReg);
+		end
 	endrule
 	method Action putInput(Float v, Bit#(8) input_idx);
 		inputQ.enq(tuple2(v,input_idx));
