@@ -1,0 +1,1641 @@
+=== Generated schedule for mkTop ===
+
+Method schedule
+---------------
+Method: ftdi_rxd
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: ftdi_tx
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+Conflicts: ftdi_tx
+ 
+Method: led
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: sdram_pins_sdram_csn
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: sdram_pins_sdram_rasn
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: sdram_pins_sdram_casn
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: sdram_pins_sdram_wen
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: sdram_pins_sdram_a
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: sdram_pins_sdram_ba
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Method: sdram_pins_sdram_dqm
+Ready signal: True
+Conflict-free: ftdi_rxd,
+	       ftdi_tx,
+	       led,
+	       sdram_pins_sdram_csn,
+	       sdram_pins_sdram_rasn,
+	       sdram_pins_sdram_casn,
+	       sdram_pins_sdram_wen,
+	       sdram_pins_sdram_a,
+	       sdram_pins_sdram_ba,
+	       sdram_pins_sdram_dqm
+ 
+Rule schedule
+-------------
+Rule: uart_outcntclk
+Predicate: ((uart_clkcnt + 16'd1) < 16'd217) ||
+	   (! (uart_curoutoff == 5'd0)) || uart_inQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: uart_insample
+Predicate: (! (uart_samplecountdown == 16'd0)) ||
+	   (! (uart_bleft == 4'd1)) || uart_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: mem_init
+Predicate: (! (mem_dqm == 2'd0)) && (mem_state == 3'd0)
+Blocking rules: (none)
+ 
+Rule: mem_controllerFSM
+Predicate: ((mem_state == 3'd0)
+	    ? (! (mem_counter < 16'd780)) ||
+	      (! mem_reqQ.notEmpty) || mem_reqQ.i_notEmpty
+	    : (False ||
+	       False ||
+	       False ||
+	       False ||
+	       (! (mem_state == 3'd5)) ||
+	       (! mem_readRespQ.notFull) || mem_readRespQ.i_notFull)) &&
+	   ((! (mem_state == 3'd0)) || (mem_dqm == 2'd0))
+Blocking rules: (none)
+ 
+Rule: main_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_0_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_0_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_0_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fmult_procMultResult
+Predicate: main_nn_pes_0_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_0_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_0_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_procIn
+Predicate: main_nn_pes_0_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_0_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_calcFrac
+Predicate: main_nn_pes_0_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_0_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_calcFrac2
+Predicate: main_nn_pes_0_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_0_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_normalize
+Predicate: main_nn_pes_0_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_0_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_normalize1
+Predicate: main_nn_pes_0_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_0_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_normalize2
+Predicate: main_nn_pes_0_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_0_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_normalize3
+Predicate: main_nn_pes_0_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_0_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_fadd_normalize4
+Predicate: main_nn_pes_0_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_0_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_enqMac
+Predicate: ((main_nn_pes_0_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_0_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_0_inputQ.i_notEmpty &&
+	   main_nn_pes_0_weightQ.i_notEmpty &&
+	   main_nn_pes_0_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_0_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_0_addForwardQ.i_notFull &&
+	   ((main_nn_pes_0_curMacIdx < 32'd64) ||
+	    main_nn_pes_0_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_enqAdd
+Predicate: main_nn_pes_0_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_0_fadd_inQ.i_notFull &&
+	   main_nn_pes_0_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_relayMacResult
+Predicate: (! ((main_nn_pes_0_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_0_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_0_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_relayPartialIdx
+Predicate: (! ((main_nn_pes_0_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_0_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_0_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_filterDoneResults
+Predicate: (! (main_nn_pes_0_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_0_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_0_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_0_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_0_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_0_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_0_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_0_outputQ.i_notFull
+	    : main_nn_pes_0_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_0_relayWeightIn
+Predicate: main_nn_pes_0_weightQ.i_notFull &&
+	   ((! (main_nn_pes_0_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_0_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights
+Predicate: main_nn_weightInQs_0.i_notEmpty &&
+	   main_nn_weightInQs_1.i_notFull &&
+	   ((! (main_nn_weightInIdx_0[2:0] == 3'd0)) ||
+	    main_nn_pes_0_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput
+Predicate: main_nn_dataInQs_0.i_notEmpty &&
+	   main_nn_dataInQs_1.i_notFull && main_nn_pes_0_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult
+Predicate: main_nn_resultOutQs_0.i_notFull &&
+	   (main_nn_pes_0_outputQ.notEmpty
+	    ? main_nn_pes_0_outputQ.i_notEmpty
+	    : main_nn_resultOutQs_1.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_1_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_1_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_1_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fmult_procMultResult
+Predicate: main_nn_pes_1_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_1_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_1_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_procIn
+Predicate: main_nn_pes_1_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_1_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_calcFrac
+Predicate: main_nn_pes_1_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_1_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_calcFrac2
+Predicate: main_nn_pes_1_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_1_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_normalize
+Predicate: main_nn_pes_1_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_1_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_normalize1
+Predicate: main_nn_pes_1_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_1_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_normalize2
+Predicate: main_nn_pes_1_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_1_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_normalize3
+Predicate: main_nn_pes_1_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_1_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_fadd_normalize4
+Predicate: main_nn_pes_1_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_1_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_enqMac
+Predicate: ((main_nn_pes_1_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_1_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_1_inputQ.i_notEmpty &&
+	   main_nn_pes_1_weightQ.i_notEmpty &&
+	   main_nn_pes_1_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_1_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_1_addForwardQ.i_notFull &&
+	   ((main_nn_pes_1_curMacIdx < 32'd64) ||
+	    main_nn_pes_1_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_enqAdd
+Predicate: main_nn_pes_1_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_1_fadd_inQ.i_notFull &&
+	   main_nn_pes_1_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_relayMacResult
+Predicate: (! ((main_nn_pes_1_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_1_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_1_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_relayPartialIdx
+Predicate: (! ((main_nn_pes_1_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_1_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_1_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_filterDoneResults
+Predicate: (! (main_nn_pes_1_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_1_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_1_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_1_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_1_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_1_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_1_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_1_outputQ.i_notFull
+	    : main_nn_pes_1_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_1_relayWeightIn
+Predicate: main_nn_pes_1_weightQ.i_notFull &&
+	   ((! (main_nn_pes_1_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_1_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights_1
+Predicate: main_nn_weightInQs_1.i_notEmpty &&
+	   main_nn_weightInQs_2.i_notFull &&
+	   ((! (main_nn_weightInIdx_1[2:0] == 3'd1)) ||
+	    main_nn_pes_1_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput_1
+Predicate: main_nn_dataInQs_1.i_notEmpty &&
+	   main_nn_dataInQs_2.i_notFull && main_nn_pes_1_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult_1
+Predicate: main_nn_resultOutQs_1.i_notFull &&
+	   (main_nn_pes_1_outputQ.notEmpty
+	    ? main_nn_pes_1_outputQ.i_notEmpty
+	    : main_nn_resultOutQs_2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_2_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_2_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_2_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fmult_procMultResult
+Predicate: main_nn_pes_2_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_2_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_2_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_procIn
+Predicate: main_nn_pes_2_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_2_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_calcFrac
+Predicate: main_nn_pes_2_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_2_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_calcFrac2
+Predicate: main_nn_pes_2_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_2_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_normalize
+Predicate: main_nn_pes_2_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_2_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_normalize1
+Predicate: main_nn_pes_2_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_2_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_normalize2
+Predicate: main_nn_pes_2_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_2_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_normalize3
+Predicate: main_nn_pes_2_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_2_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_fadd_normalize4
+Predicate: main_nn_pes_2_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_2_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_enqMac
+Predicate: ((main_nn_pes_2_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_2_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_2_inputQ.i_notEmpty &&
+	   main_nn_pes_2_weightQ.i_notEmpty &&
+	   main_nn_pes_2_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_2_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_2_addForwardQ.i_notFull &&
+	   ((main_nn_pes_2_curMacIdx < 32'd64) ||
+	    main_nn_pes_2_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_enqAdd
+Predicate: main_nn_pes_2_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_2_fadd_inQ.i_notFull &&
+	   main_nn_pes_2_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_relayMacResult
+Predicate: (! ((main_nn_pes_2_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_2_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_2_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_relayPartialIdx
+Predicate: (! ((main_nn_pes_2_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_2_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_2_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_filterDoneResults
+Predicate: (! (main_nn_pes_2_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_2_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_2_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_2_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_2_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_2_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_2_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_2_outputQ.i_notFull
+	    : main_nn_pes_2_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_2_relayWeightIn
+Predicate: main_nn_pes_2_weightQ.i_notFull &&
+	   ((! (main_nn_pes_2_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_2_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights_2
+Predicate: main_nn_weightInQs_2.i_notEmpty &&
+	   main_nn_weightInQs_3.i_notFull &&
+	   ((! (main_nn_weightInIdx_2[2:0] == 3'd2)) ||
+	    main_nn_pes_2_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput_2
+Predicate: main_nn_dataInQs_2.i_notEmpty &&
+	   main_nn_dataInQs_3.i_notFull && main_nn_pes_2_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult_2
+Predicate: main_nn_resultOutQs_2.i_notFull &&
+	   (main_nn_pes_2_outputQ.notEmpty
+	    ? main_nn_pes_2_outputQ.i_notEmpty
+	    : main_nn_resultOutQs_3.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_3_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_3_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_3_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fmult_procMultResult
+Predicate: main_nn_pes_3_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_3_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_3_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_procIn
+Predicate: main_nn_pes_3_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_3_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_calcFrac
+Predicate: main_nn_pes_3_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_3_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_calcFrac2
+Predicate: main_nn_pes_3_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_3_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_normalize
+Predicate: main_nn_pes_3_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_3_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_normalize1
+Predicate: main_nn_pes_3_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_3_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_normalize2
+Predicate: main_nn_pes_3_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_3_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_normalize3
+Predicate: main_nn_pes_3_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_3_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_fadd_normalize4
+Predicate: main_nn_pes_3_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_3_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_enqMac
+Predicate: ((main_nn_pes_3_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_3_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_3_inputQ.i_notEmpty &&
+	   main_nn_pes_3_weightQ.i_notEmpty &&
+	   main_nn_pes_3_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_3_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_3_addForwardQ.i_notFull &&
+	   ((main_nn_pes_3_curMacIdx < 32'd64) ||
+	    main_nn_pes_3_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_enqAdd
+Predicate: main_nn_pes_3_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_3_fadd_inQ.i_notFull &&
+	   main_nn_pes_3_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_relayMacResult
+Predicate: (! ((main_nn_pes_3_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_3_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_3_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_relayPartialIdx
+Predicate: (! ((main_nn_pes_3_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_3_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_3_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_filterDoneResults
+Predicate: (! (main_nn_pes_3_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_3_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_3_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_3_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_3_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_3_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_3_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_3_outputQ.i_notFull
+	    : main_nn_pes_3_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_3_relayWeightIn
+Predicate: main_nn_pes_3_weightQ.i_notFull &&
+	   ((! (main_nn_pes_3_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_3_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights_3
+Predicate: main_nn_weightInQs_3.i_notEmpty &&
+	   main_nn_weightInQs_4.i_notFull &&
+	   ((! (main_nn_weightInIdx_3[2:0] == 3'd3)) ||
+	    main_nn_pes_3_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput_3
+Predicate: main_nn_dataInQs_3.i_notEmpty &&
+	   main_nn_dataInQs_4.i_notFull && main_nn_pes_3_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult_3
+Predicate: main_nn_resultOutQs_3.i_notFull &&
+	   (main_nn_pes_3_outputQ.notEmpty
+	    ? main_nn_pes_3_outputQ.i_notEmpty
+	    : main_nn_resultOutQs_4.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_4_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_4_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_4_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fmult_procMultResult
+Predicate: main_nn_pes_4_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_4_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_4_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_procIn
+Predicate: main_nn_pes_4_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_4_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_calcFrac
+Predicate: main_nn_pes_4_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_4_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_calcFrac2
+Predicate: main_nn_pes_4_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_4_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_normalize
+Predicate: main_nn_pes_4_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_4_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_normalize1
+Predicate: main_nn_pes_4_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_4_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_normalize2
+Predicate: main_nn_pes_4_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_4_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_normalize3
+Predicate: main_nn_pes_4_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_4_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_fadd_normalize4
+Predicate: main_nn_pes_4_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_4_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_enqMac
+Predicate: ((main_nn_pes_4_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_4_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_4_inputQ.i_notEmpty &&
+	   main_nn_pes_4_weightQ.i_notEmpty &&
+	   main_nn_pes_4_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_4_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_4_addForwardQ.i_notFull &&
+	   ((main_nn_pes_4_curMacIdx < 32'd64) ||
+	    main_nn_pes_4_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_enqAdd
+Predicate: main_nn_pes_4_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_4_fadd_inQ.i_notFull &&
+	   main_nn_pes_4_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_relayMacResult
+Predicate: (! ((main_nn_pes_4_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_4_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_4_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_relayPartialIdx
+Predicate: (! ((main_nn_pes_4_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_4_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_4_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_filterDoneResults
+Predicate: (! (main_nn_pes_4_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_4_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_4_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_4_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_4_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_4_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_4_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_4_outputQ.i_notFull
+	    : main_nn_pes_4_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_4_relayWeightIn
+Predicate: main_nn_pes_4_weightQ.i_notFull &&
+	   ((! (main_nn_pes_4_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_4_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights_4
+Predicate: main_nn_weightInQs_4.i_notEmpty &&
+	   main_nn_weightInQs_5.i_notFull &&
+	   ((! (main_nn_weightInIdx_4[2:0] == 3'd4)) ||
+	    main_nn_pes_4_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput_4
+Predicate: main_nn_dataInQs_4.i_notEmpty &&
+	   main_nn_dataInQs_5.i_notFull && main_nn_pes_4_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult_4
+Predicate: main_nn_resultOutQs_4.i_notFull &&
+	   (main_nn_pes_4_outputQ.notEmpty
+	    ? main_nn_pes_4_outputQ.i_notEmpty
+	    : main_nn_resultOutQs_5.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_5_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_5_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_5_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fmult_procMultResult
+Predicate: main_nn_pes_5_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_5_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_5_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_procIn
+Predicate: main_nn_pes_5_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_5_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_calcFrac
+Predicate: main_nn_pes_5_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_5_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_calcFrac2
+Predicate: main_nn_pes_5_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_5_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_normalize
+Predicate: main_nn_pes_5_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_5_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_normalize1
+Predicate: main_nn_pes_5_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_5_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_normalize2
+Predicate: main_nn_pes_5_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_5_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_normalize3
+Predicate: main_nn_pes_5_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_5_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_fadd_normalize4
+Predicate: main_nn_pes_5_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_5_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_enqMac
+Predicate: ((main_nn_pes_5_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_5_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_5_inputQ.i_notEmpty &&
+	   main_nn_pes_5_weightQ.i_notEmpty &&
+	   main_nn_pes_5_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_5_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_5_addForwardQ.i_notFull &&
+	   ((main_nn_pes_5_curMacIdx < 32'd64) ||
+	    main_nn_pes_5_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_enqAdd
+Predicate: main_nn_pes_5_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_5_fadd_inQ.i_notFull &&
+	   main_nn_pes_5_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_relayMacResult
+Predicate: (! ((main_nn_pes_5_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_5_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_5_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_relayPartialIdx
+Predicate: (! ((main_nn_pes_5_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_5_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_5_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_filterDoneResults
+Predicate: (! (main_nn_pes_5_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_5_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_5_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_5_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_5_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_5_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_5_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_5_outputQ.i_notFull
+	    : main_nn_pes_5_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_5_relayWeightIn
+Predicate: main_nn_pes_5_weightQ.i_notFull &&
+	   ((! (main_nn_pes_5_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_5_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights_5
+Predicate: main_nn_weightInQs_5.i_notEmpty &&
+	   main_nn_weightInQs_6.i_notFull &&
+	   ((! (main_nn_weightInIdx_5[2:0] == 3'd5)) ||
+	    main_nn_pes_5_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput_5
+Predicate: main_nn_dataInQs_5.i_notEmpty &&
+	   main_nn_dataInQs_6.i_notFull && main_nn_pes_5_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult_5
+Predicate: main_nn_resultOutQs_5.i_notFull &&
+	   (main_nn_pes_5_outputQ.notEmpty
+	    ? main_nn_pes_5_outputQ.i_notEmpty
+	    : main_nn_resultOutQs_6.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_6_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_6_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_6_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fmult_procMultResult
+Predicate: main_nn_pes_6_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_6_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_6_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_procIn
+Predicate: main_nn_pes_6_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_6_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_calcFrac
+Predicate: main_nn_pes_6_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_6_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_calcFrac2
+Predicate: main_nn_pes_6_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_6_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_normalize
+Predicate: main_nn_pes_6_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_6_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_normalize1
+Predicate: main_nn_pes_6_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_6_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_normalize2
+Predicate: main_nn_pes_6_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_6_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_normalize3
+Predicate: main_nn_pes_6_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_6_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_fadd_normalize4
+Predicate: main_nn_pes_6_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_6_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_enqMac
+Predicate: ((main_nn_pes_6_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_6_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_6_inputQ.i_notEmpty &&
+	   main_nn_pes_6_weightQ.i_notEmpty &&
+	   main_nn_pes_6_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_6_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_6_addForwardQ.i_notFull &&
+	   ((main_nn_pes_6_curMacIdx < 32'd64) ||
+	    main_nn_pes_6_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_enqAdd
+Predicate: main_nn_pes_6_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_6_fadd_inQ.i_notFull &&
+	   main_nn_pes_6_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_relayMacResult
+Predicate: (! ((main_nn_pes_6_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_6_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_6_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_relayPartialIdx
+Predicate: (! ((main_nn_pes_6_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_6_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_6_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_filterDoneResults
+Predicate: (! (main_nn_pes_6_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_6_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_6_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_6_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_6_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_6_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_6_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_6_outputQ.i_notFull
+	    : main_nn_pes_6_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_6_relayWeightIn
+Predicate: main_nn_pes_6_weightQ.i_notFull &&
+	   ((! (main_nn_pes_6_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_6_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights_6
+Predicate: main_nn_weightInQs_6.i_notEmpty &&
+	   main_nn_weightInQs_7.i_notFull &&
+	   ((! (main_nn_weightInIdx_6[2:0] == 3'd6)) ||
+	    main_nn_pes_6_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput_6
+Predicate: main_nn_dataInQs_6.i_notEmpty &&
+	   main_nn_dataInQs_7.i_notFull && main_nn_pes_6_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult_6
+Predicate: main_nn_resultOutQs_6.i_notFull &&
+	   (main_nn_pes_6_outputQ.notEmpty
+	    ? main_nn_pes_6_outputQ.i_notEmpty
+	    : main_nn_resultOutQs_7.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_incCycleCount
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fmult_mult18_enqValid
+Predicate: (! main_nn_pes_7_fmult_mult18_validMap[2]) ||
+	   (! main_nn_pes_7_fmult_mult18_outQ.notFull) ||
+	   main_nn_pes_7_fmult_mult18_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fmult_procMultResult
+Predicate: main_nn_pes_7_fmult_mult18_outQ.i_notEmpty &&
+	   main_nn_pes_7_fmult_signExpZeroQ.i_notEmpty &&
+	   main_nn_pes_7_fmult_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_procIn
+Predicate: main_nn_pes_7_fadd_inQ.i_notEmpty &&
+	   main_nn_pes_7_fadd_inProcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_calcFrac
+Predicate: main_nn_pes_7_fadd_inProcQ.i_notEmpty &&
+	   main_nn_pes_7_fadd_calcQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_calcFrac2
+Predicate: main_nn_pes_7_fadd_calcQ.i_notEmpty &&
+	   main_nn_pes_7_fadd_normalizeQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_normalize
+Predicate: main_nn_pes_7_fadd_normalizeQ.i_notEmpty &&
+	   main_nn_pes_7_fadd_normalizeQ1.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_normalize1
+Predicate: main_nn_pes_7_fadd_normalizeQ1.i_notEmpty &&
+	   main_nn_pes_7_fadd_normalizeQ2.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_normalize2
+Predicate: main_nn_pes_7_fadd_normalizeQ2.i_notEmpty &&
+	   main_nn_pes_7_fadd_normalizeQ3.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_normalize3
+Predicate: main_nn_pes_7_fadd_normalizeQ3.i_notEmpty &&
+	   main_nn_pes_7_fadd_normalizeQ4.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_fadd_normalize4
+Predicate: main_nn_pes_7_fadd_normalizeQ4.i_notEmpty &&
+	   main_nn_pes_7_fadd_outQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_partialSumIdxQ2_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_partialSumIdxQ2_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_partialSumIdxQ2_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_partialSumQ_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_partialSumQ_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_partialSumQ_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_enqMac
+Predicate: ((main_nn_pes_7_fmult_mult18_dataInFlightUp -
+	     main_nn_pes_7_fmult_mult18_dataInFlightDn) <
+	    3'd4) &&
+	   main_nn_pes_7_inputQ.i_notEmpty &&
+	   main_nn_pes_7_weightQ.i_notEmpty &&
+	   main_nn_pes_7_partialSumIdxQ1.i_notFull &&
+	   main_nn_pes_7_fmult_signExpZeroQ.i_notFull &&
+	   main_nn_pes_7_addForwardQ.i_notFull &&
+	   ((main_nn_pes_7_curMacIdx < 32'd64) ||
+	    main_nn_pes_7_partialSumQ2.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_enqAdd
+Predicate: main_nn_pes_7_fmult_outQ.i_notEmpty &&
+	   main_nn_pes_7_fadd_inQ.i_notFull &&
+	   main_nn_pes_7_addForwardQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_relayMacResult
+Predicate: (! ((main_nn_pes_7_partialSumQ_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_7_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_7_fadd_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_relayPartialIdx
+Predicate: (! ((main_nn_pes_7_partialSumIdxQ2_rRdPtr.read + 8'd64) ==
+	       main_nn_pes_7_partialSumIdxQ2_rWrPtr.read)) &&
+	   main_nn_pes_7_partialSumIdxQ1.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_filterDoneResults
+Predicate: (! (main_nn_pes_7_partialSumIdxQ2_rRdPtr.read ==
+	       main_nn_pes_7_partialSumIdxQ2_rWrPtr.read)) &&
+	   (! (main_nn_pes_7_partialSumQ_rRdPtr.read ==
+	       main_nn_pes_7_partialSumQ_rWrPtr.read)) &&
+	   main_nn_pes_7_partialSumIdxQ2_wDataOut.whas &&
+	   main_nn_pes_7_partialSumQ_wDataOut.whas &&
+	   ((main_nn_pes_7_partialSumIdxQ2_wDataOut.wget[15:0] == 16'd1023)
+	    ? main_nn_pes_7_outputQ.i_notFull
+	    : main_nn_pes_7_partialSumQ2.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_pes_7_relayWeightIn
+Predicate: main_nn_pes_7_weightQ.i_notFull &&
+	   ((! (main_nn_pes_7_weightReplicateCnt == 8'd0)) ||
+	    main_nn_pes_7_weightInQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardWeights_7
+Predicate: main_nn_weightInQs_7.i_notEmpty &&
+	   ((! (main_nn_weightInIdx_7[2:0] == 3'd7)) ||
+	    main_nn_pes_7_weightInQ.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardInput_7
+Predicate: main_nn_dataInQs_7.i_notEmpty && main_nn_pes_7_inputQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: main_nn_forwardResult_7
+Predicate: (! main_nn_pes_7_outputQ.notEmpty) ||
+	   (main_nn_pes_7_outputQ.i_notEmpty &&
+	    main_nn_resultOutQs_7.i_notFull)
+Blocking rules: (none)
+ 
+Rule: main_recvInputDst
+Predicate: main_serialrxQ.i_notEmpty && (! main_inputDst[8])
+Blocking rules: (none)
+ 
+Rule: main_recvInputFloat
+Predicate: main_serialrxQ.i_notEmpty &&
+	   ((! (main_inputBufferCnt == 2'd3)) ||
+	    ((((main_inputDst[8]
+		? main_inputDst[7:0]
+		: (_ :: Bit 8)) ==
+	       8'hFF) ||
+	      main_nn_dataInQs_0.i_notFull) &&
+	     ((! ((main_inputDst[8]
+		   ? main_inputDst[7:0]
+		   : (_ :: Bit 8)) ==
+		  8'hFF)) ||
+	      main_memWriteQ.i_notFull))) &&
+	   main_inputDst[8]
+Blocking rules: (none)
+ 
+Rule: main_serializeOutput
+Predicate: main_serialtxQ.i_notFull &&
+	   ((! (main_outputBufferCnt == 3'd0)) ||
+	    main_nn_resultOutQs_0.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_procMemWrite
+Predicate: mem_reqQ.i_notFull &&
+	   (main_memWriteBuffer[16] || main_memWriteQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: main_procMemRead
+Predicate: mem_reqQ.i_notFull && main_memWriteDone
+Blocking rules: main_procMemWrite
+ 
+Rule: main_procMemReadResp
+Predicate: mem_readRespQ.i_notEmpty &&
+	   ((! main_memReadBuffer[16]) || main_nn_weightInQs_0.i_notFull)
+Blocking rules: (none)
+ 
+Rule: relayUartIn
+Predicate: serialToMainQ.RDY_enq && uart_outQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: relayUartIn2
+Predicate: serialToMainQ.RDY_deq &&
+	   serialToMainQ.RDY_first && main_serialrxQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: relayUartOut
+Predicate: mainToSerialQ.RDY_enq && main_serialtxQ.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: relayUartOut2
+Predicate: mainToSerialQ.RDY_deq &&
+	   mainToSerialQ.RDY_first && uart_inQ.i_notFull
+Blocking rules: (none)
+ 
+Logical execution order: ftdi_rxd,
+			 ftdi_tx,
+			 led,
+			 sdram_pins_sdram_csn,
+			 sdram_pins_sdram_rasn,
+			 sdram_pins_sdram_casn,
+			 sdram_pins_sdram_wen,
+			 sdram_pins_sdram_a,
+			 sdram_pins_sdram_ba,
+			 sdram_pins_sdram_dqm,
+			 relayUartIn,
+			 relayUartIn2,
+			 relayUartOut,
+			 relayUartOut2,
+			 uart_outcntclk,
+			 uart_insample,
+			 mem_init,
+			 mem_controllerFSM,
+			 main_recvInputDst,
+			 main_serializeOutput,
+			 main_incCycleCount,
+			 main_procMemWrite,
+			 main_procMemRead,
+			 main_recvInputFloat,
+			 main_procMemReadResp,
+			 main_nn_forwardWeights,
+			 main_nn_forwardInput,
+			 main_nn_forwardResult,
+			 main_nn_forwardWeights_1,
+			 main_nn_forwardInput_1,
+			 main_nn_forwardResult_1,
+			 main_nn_forwardWeights_2,
+			 main_nn_forwardInput_2,
+			 main_nn_forwardResult_2,
+			 main_nn_forwardWeights_3,
+			 main_nn_forwardInput_3,
+			 main_nn_forwardResult_3,
+			 main_nn_forwardWeights_4,
+			 main_nn_forwardInput_4,
+			 main_nn_forwardResult_4,
+			 main_nn_forwardWeights_5,
+			 main_nn_forwardInput_5,
+			 main_nn_forwardResult_5,
+			 main_nn_forwardWeights_6,
+			 main_nn_forwardInput_6,
+			 main_nn_forwardResult_6,
+			 main_nn_forwardWeights_7,
+			 main_nn_forwardInput_7,
+			 main_nn_forwardResult_7,
+			 main_nn_pes_0_incCycleCount,
+			 main_nn_pes_0_enqMac,
+			 main_nn_pes_0_enqAdd,
+			 main_nn_pes_0_relayMacResult,
+			 main_nn_pes_0_relayPartialIdx,
+			 main_nn_pes_0_relayWeightIn,
+			 main_nn_pes_0_fmult_mult18_enqValid,
+			 main_nn_pes_0_fmult_procMultResult,
+			 main_nn_pes_0_fadd_procIn,
+			 main_nn_pes_0_fadd_calcFrac,
+			 main_nn_pes_0_fadd_calcFrac2,
+			 main_nn_pes_0_fadd_normalize,
+			 main_nn_pes_0_fadd_normalize1,
+			 main_nn_pes_0_fadd_normalize2,
+			 main_nn_pes_0_fadd_normalize3,
+			 main_nn_pes_0_fadd_normalize4,
+			 main_nn_pes_0_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_0_partialSumIdxQ2_portA,
+			 main_nn_pes_0_partialSumQ_portB_read_data,
+			 main_nn_pes_0_filterDoneResults,
+			 main_nn_pes_0_partialSumIdxQ2_portB,
+			 main_nn_pes_0_partialSumQ_portA,
+			 main_nn_pes_0_partialSumQ_portB,
+			 main_nn_pes_1_incCycleCount,
+			 main_nn_pes_1_enqMac,
+			 main_nn_pes_1_enqAdd,
+			 main_nn_pes_1_relayMacResult,
+			 main_nn_pes_1_relayPartialIdx,
+			 main_nn_pes_1_relayWeightIn,
+			 main_nn_pes_1_fmult_mult18_enqValid,
+			 main_nn_pes_1_fmult_procMultResult,
+			 main_nn_pes_1_fadd_procIn,
+			 main_nn_pes_1_fadd_calcFrac,
+			 main_nn_pes_1_fadd_calcFrac2,
+			 main_nn_pes_1_fadd_normalize,
+			 main_nn_pes_1_fadd_normalize1,
+			 main_nn_pes_1_fadd_normalize2,
+			 main_nn_pes_1_fadd_normalize3,
+			 main_nn_pes_1_fadd_normalize4,
+			 main_nn_pes_1_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_1_partialSumIdxQ2_portA,
+			 main_nn_pes_1_partialSumQ_portB_read_data,
+			 main_nn_pes_1_filterDoneResults,
+			 main_nn_pes_1_partialSumIdxQ2_portB,
+			 main_nn_pes_1_partialSumQ_portA,
+			 main_nn_pes_1_partialSumQ_portB,
+			 main_nn_pes_2_incCycleCount,
+			 main_nn_pes_2_enqMac,
+			 main_nn_pes_2_enqAdd,
+			 main_nn_pes_2_relayMacResult,
+			 main_nn_pes_2_relayPartialIdx,
+			 main_nn_pes_2_relayWeightIn,
+			 main_nn_pes_2_fmult_mult18_enqValid,
+			 main_nn_pes_2_fmult_procMultResult,
+			 main_nn_pes_2_fadd_procIn,
+			 main_nn_pes_2_fadd_calcFrac,
+			 main_nn_pes_2_fadd_calcFrac2,
+			 main_nn_pes_2_fadd_normalize,
+			 main_nn_pes_2_fadd_normalize1,
+			 main_nn_pes_2_fadd_normalize2,
+			 main_nn_pes_2_fadd_normalize3,
+			 main_nn_pes_2_fadd_normalize4,
+			 main_nn_pes_2_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_2_partialSumIdxQ2_portA,
+			 main_nn_pes_2_partialSumQ_portB_read_data,
+			 main_nn_pes_2_filterDoneResults,
+			 main_nn_pes_2_partialSumIdxQ2_portB,
+			 main_nn_pes_2_partialSumQ_portA,
+			 main_nn_pes_2_partialSumQ_portB,
+			 main_nn_pes_3_incCycleCount,
+			 main_nn_pes_3_enqMac,
+			 main_nn_pes_3_enqAdd,
+			 main_nn_pes_3_relayMacResult,
+			 main_nn_pes_3_relayPartialIdx,
+			 main_nn_pes_3_relayWeightIn,
+			 main_nn_pes_3_fmult_mult18_enqValid,
+			 main_nn_pes_3_fmult_procMultResult,
+			 main_nn_pes_3_fadd_procIn,
+			 main_nn_pes_3_fadd_calcFrac,
+			 main_nn_pes_3_fadd_calcFrac2,
+			 main_nn_pes_3_fadd_normalize,
+			 main_nn_pes_3_fadd_normalize1,
+			 main_nn_pes_3_fadd_normalize2,
+			 main_nn_pes_3_fadd_normalize3,
+			 main_nn_pes_3_fadd_normalize4,
+			 main_nn_pes_3_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_3_partialSumIdxQ2_portA,
+			 main_nn_pes_3_partialSumQ_portB_read_data,
+			 main_nn_pes_3_filterDoneResults,
+			 main_nn_pes_3_partialSumIdxQ2_portB,
+			 main_nn_pes_3_partialSumQ_portA,
+			 main_nn_pes_3_partialSumQ_portB,
+			 main_nn_pes_4_incCycleCount,
+			 main_nn_pes_4_enqMac,
+			 main_nn_pes_4_enqAdd,
+			 main_nn_pes_4_relayMacResult,
+			 main_nn_pes_4_relayPartialIdx,
+			 main_nn_pes_4_relayWeightIn,
+			 main_nn_pes_4_fmult_mult18_enqValid,
+			 main_nn_pes_4_fmult_procMultResult,
+			 main_nn_pes_4_fadd_procIn,
+			 main_nn_pes_4_fadd_calcFrac,
+			 main_nn_pes_4_fadd_calcFrac2,
+			 main_nn_pes_4_fadd_normalize,
+			 main_nn_pes_4_fadd_normalize1,
+			 main_nn_pes_4_fadd_normalize2,
+			 main_nn_pes_4_fadd_normalize3,
+			 main_nn_pes_4_fadd_normalize4,
+			 main_nn_pes_4_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_4_partialSumIdxQ2_portA,
+			 main_nn_pes_4_partialSumQ_portB_read_data,
+			 main_nn_pes_4_filterDoneResults,
+			 main_nn_pes_4_partialSumIdxQ2_portB,
+			 main_nn_pes_4_partialSumQ_portA,
+			 main_nn_pes_4_partialSumQ_portB,
+			 main_nn_pes_5_incCycleCount,
+			 main_nn_pes_5_enqMac,
+			 main_nn_pes_5_enqAdd,
+			 main_nn_pes_5_relayMacResult,
+			 main_nn_pes_5_relayPartialIdx,
+			 main_nn_pes_5_relayWeightIn,
+			 main_nn_pes_5_fmult_mult18_enqValid,
+			 main_nn_pes_5_fmult_procMultResult,
+			 main_nn_pes_5_fadd_procIn,
+			 main_nn_pes_5_fadd_calcFrac,
+			 main_nn_pes_5_fadd_calcFrac2,
+			 main_nn_pes_5_fadd_normalize,
+			 main_nn_pes_5_fadd_normalize1,
+			 main_nn_pes_5_fadd_normalize2,
+			 main_nn_pes_5_fadd_normalize3,
+			 main_nn_pes_5_fadd_normalize4,
+			 main_nn_pes_5_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_5_partialSumIdxQ2_portA,
+			 main_nn_pes_5_partialSumQ_portB_read_data,
+			 main_nn_pes_5_filterDoneResults,
+			 main_nn_pes_5_partialSumIdxQ2_portB,
+			 main_nn_pes_5_partialSumQ_portA,
+			 main_nn_pes_5_partialSumQ_portB,
+			 main_nn_pes_6_incCycleCount,
+			 main_nn_pes_6_enqMac,
+			 main_nn_pes_6_enqAdd,
+			 main_nn_pes_6_relayMacResult,
+			 main_nn_pes_6_relayPartialIdx,
+			 main_nn_pes_6_relayWeightIn,
+			 main_nn_pes_6_fmult_mult18_enqValid,
+			 main_nn_pes_6_fmult_procMultResult,
+			 main_nn_pes_6_fadd_procIn,
+			 main_nn_pes_6_fadd_calcFrac,
+			 main_nn_pes_6_fadd_calcFrac2,
+			 main_nn_pes_6_fadd_normalize,
+			 main_nn_pes_6_fadd_normalize1,
+			 main_nn_pes_6_fadd_normalize2,
+			 main_nn_pes_6_fadd_normalize3,
+			 main_nn_pes_6_fadd_normalize4,
+			 main_nn_pes_6_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_6_partialSumIdxQ2_portA,
+			 main_nn_pes_6_partialSumQ_portB_read_data,
+			 main_nn_pes_6_filterDoneResults,
+			 main_nn_pes_6_partialSumIdxQ2_portB,
+			 main_nn_pes_6_partialSumQ_portA,
+			 main_nn_pes_6_partialSumQ_portB,
+			 main_nn_pes_7_incCycleCount,
+			 main_nn_pes_7_enqMac,
+			 main_nn_pes_7_enqAdd,
+			 main_nn_pes_7_relayMacResult,
+			 main_nn_pes_7_relayPartialIdx,
+			 main_nn_pes_7_relayWeightIn,
+			 main_nn_pes_7_fmult_mult18_enqValid,
+			 main_nn_pes_7_fmult_procMultResult,
+			 main_nn_pes_7_fadd_procIn,
+			 main_nn_pes_7_fadd_calcFrac,
+			 main_nn_pes_7_fadd_calcFrac2,
+			 main_nn_pes_7_fadd_normalize,
+			 main_nn_pes_7_fadd_normalize1,
+			 main_nn_pes_7_fadd_normalize2,
+			 main_nn_pes_7_fadd_normalize3,
+			 main_nn_pes_7_fadd_normalize4,
+			 main_nn_pes_7_partialSumIdxQ2_portB_read_data,
+			 main_nn_pes_7_partialSumIdxQ2_portA,
+			 main_nn_pes_7_partialSumQ_portB_read_data,
+			 main_nn_pes_7_filterDoneResults,
+			 main_nn_pes_7_partialSumIdxQ2_portB,
+			 main_nn_pes_7_partialSumQ_portA,
+			 main_nn_pes_7_partialSumQ_portB
+
+=====================================
